@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <body>
+        <div th:fragment="sidebar">
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <!-- Brand Logo -->
+                <a th:href="@{/}" class="brand-link text-center">
+                    <!--<img th:src="@{/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"-->
+                    <!--style="opakota: .8">-->
+                    <span class="brand-text font-weight-bold">Parking System</span>
+                </a>
+
+                <!-- Sidebar -->
+                <div class="sidebar slimScroll">
+                    <!-- Sidebar user panel (optional) -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                    <img th:src="@{/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                    <a href="#" class="d-block">Alexander Pierce</a>
+                    </div>
+                    </div>
+
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <!--add 'menu-open' to <li> class if you want to open it-->
+                            <!--add 'active' to <li>,<a> class if you want to make it look active-->
+                            <li class="nav-item has-treeview"
+                                th:classappend="${activeTab == 'SIMPANAN_KOPERASI' ? 'menu-open' : null}">
+                                <a href="#" class="nav-link" th:classappend="${activeTab == 'SIMPANAN_KOPERASI' ? 'active' : null}">
+                                    <i class="nav-icon fa fa-gears"></i>
+                                    <p>
+                                        Master
+                                        <i class="right fa fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a th:href="@{/master/user_admin/list}" class="nav-link" th:classappend="${activeTab == 'SIMPANAN_KOPERASI' ? 'active' : null}">
+                                            <i class="fa fa-university nav-icon"></i>
+                                            <p>User Admin</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a th:href="@{/master/client/list}" class="nav-link" th:classappend="${activeTab == 'TABUNGAN_INVESTASI' ? 'active' : null}">
+                                            <i class="fa fa-university nav-icon"></i>
+                                            <p>Client</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/informasi_tabungan/list}" class="nav-link">
+                                    <i class="nav-icon fa fa-list-alt"></i>
+                                    <p>Menu 2</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- /.sidebar-menu -->
+                </div>
+                <!-- /.sidebar -->
+            </aside>
+        </div>
+    </body>
+</html>

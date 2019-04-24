@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="javascript">
+            <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+            <!-- Bootstrap -->
+            <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+            <!-- AdminLTE -->
+            <script th:src="@{/dist/js/adminlte.js}"></script>
+            <script th:src="@{/plugins/jquery-confirm-master/dist/jquery-confirm.min.js}"></script>
+            <script th:src="@{/custom/common-modal.js}"></script>
+            <!--custom-->
+            <!--<link rel="stylesheet" href="plugins/slim-scroll-master/dist/slimscroll.js">-->
+            <!--<script>-->
+                    <!--if(!navigator.userAgent.match('Macintosh')){-->
+                        <!--var element = document.querySelectorAll('.slimScroll');-->
+                        <!---->
+                        <!--// Apply slim scroll plugin-->
+                        <!--var one = new slimScroll(element, {-->
+                            <!--'wrapperClass': 'scroll-wrapper unselectable mac',-->
+                            <!--'scrollBarContainerClass': 'scrollBarContainer',-->
+                            <!--'scrollBarContainerSpecialClass': 'animate',-->
+                            <!--'scrollBarClass': 'scroll',-->
+                            <!--'keepFocus': true-->
+                        <!--});-->
+                    <!--};-->
+            <!--</script>-->
+        </div>
+    </body>
+</html>

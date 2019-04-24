@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"  
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <div th:include="fragments/head :: head" th:remove="tag">Head</div>
+        <div layout:fragment="customCss" th:remove="tag"></div>
+    </head>
+    <body class="body hold-transition sidebar-mini">
+        <div class="wrapper">
+            <div th:include="fragments/header :: header" th:remove="tag">Header</div>
+            <div th:include="fragments/sidebar :: sidebar" th:remove="tag">Sidebar</div>
+            <div class="content-wrapper">
+                <div layout:fragment="pageHeader" th:remove="tag"></div>
+                <div class="col-md-12" style="padding: 0px 15px 0px 15px;" th:if="${errorMessage} or ${successMessage}">
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fa fa-ban"></i> Error!</h5>
+                        <div th:text="${errorMessage}"></div>
+                    </div>
+                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fa fa-check"></i><span th:text="${successMessage}"></span></h5>
+                    </div>
+                </div>
+                <div layout:fragment="content" th:remove="tag"></div>
+            </div>
+            <div th:include="fragments/footer :: footer" th:remove="tag">Footer</div>
+            <div id="sidebar-overlay"></div>
+        </div>
+        <div th:include="fragments/javascript :: javascript" th:remove="tag">Javascript</div>
+        <div layout:fragment="customJavascript" th:remove="tag"></div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#sidebar-overlay").on('click',function () {
+                  $(".body").removeClass('sidebar-open');
+                });
+
+                // $('.sidebar').on('click', function () {
+                //     setTimeout(function (){
+                //         resizeContent();
+                //     }, 300);
+                // });
+
+                <!--function resizeContent() {-->
+                    <!--var height = $(".sidebar").innerHeight() + 60;-->
+                    <!--$('.wrapper').css('min-height', height + 'px');-->
+                <!--}-->
+                <!--resizeContent();-->
+            });
+        </script>
+    </body>
+</html>
