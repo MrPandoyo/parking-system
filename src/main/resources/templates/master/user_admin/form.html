@@ -1,0 +1,71 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTab='MASTER',subTab='USER_ADMIN'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">User Admin</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <form th:action="@{/master/user_admin/form}" method="post" th:object="${user}">
+                            <input type="hidden" th:field="*{id}"/>
+                            <input type="hidden" th:field="*{photo}"/>
+                            <input type="hidden" th:field="*{userType}"/>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input th:field="*{username}" th:readonly="${user.id != null && user.id != '' ? 'readonly' : 'false'}" type="email" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input th:field="*{fullname}" type="text" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Hp</label>
+                                    <input th:field="*{hp}" type="number" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <input th:field="*{active}" type="checkbox" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input th:field="*{password}" type="password" class="form-control" required="required" />
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <a th:href="@{/master/provinsi/list}" class="btn btn-default">Kembali</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <script th:src="@{/custom/common-modal.js}"></script>
+    <!--custom javascript here-->
+</div>
+</body>
+</html>

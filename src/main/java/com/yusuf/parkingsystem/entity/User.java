@@ -5,19 +5,15 @@
  */
 package com.yusuf.parkingsystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yusuf.parkingsystem.constant.UserType;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.validation.constraints.NotEmpty;
 
 
 @Data
-@Entity 
+@Entity
 @Table
 public class User extends BaseEntity {
     @Column(nullable = false,unique = true)
@@ -26,35 +22,17 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Boolean active = Boolean.TRUE;
     
-    @Transient
+    @NotEmpty
     private String password;
 
-    @Column(unique = true)
     private String hp;
 
+    @NotEmpty
     private String fullname;
-        
-    @Column(unique = true)
-    private String email;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", optional = true)
-    @Cascade(CascadeType.ALL)
-    private UserPassword userPassword;
-
-    @ManyToMany
-    @OrderBy("value asc")
-    @JoinTable(
-        name="user_permission",
-        joinColumns=@JoinColumn(name="id_user", nullable=false),
-        inverseJoinColumns=@JoinColumn(name="id_permission", nullable=false)
-    )
-    private Set<Permission> permissionSet = new HashSet<>();
-    
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @Column
     private String photo;
 
     public String getStatusAktif(){
@@ -66,12 +44,12 @@ public class User extends BaseEntity {
 
     public User(){ }
 
-    public User(String username, String email, String fullname, String hp, Boolean active){
+    public User(String username, String password, String fullname, String hp,  UserType userType){
         this.username = username;
-        this.email = email;
+        this.password = password;
         this.fullname = fullname;
         this.hp = hp;
-        this.active = active;
+        this.userType = userType;
     }
 
 }

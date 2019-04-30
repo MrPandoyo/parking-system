@@ -1,57 +1,94 @@
-create table user_permission (
-   id_user varchar(36) not null,
-    id_permission varchar(36) not null,
-    primary key (id_user, id_permission)
+create table harga (
+   id varchar(36) not null,
+    amount decimal(19,2) not null,
+    duration_length integer not null,
+    duration_type integer not null,
+    nama varchar(255),
+    primary key (id)
 ) engine=InnoDB;
 
-create table permission (
+create table member (
    id varchar(36) not null,
-    permission_label varchar(255) not null,
-    permission_value varchar(255) not null,
+    foto_ktp varchar(255),
+    nomor_ktp varchar(255),
+    user_id varchar(36),
+    primary key (id)
+) engine=InnoDB;
+
+create table member_card (
+   id varchar(36) not null,
+    created_date date,
+    expired_date date,
+    nomor_plat varchar(255),
+    tipe_kendaraan varchar(255),
+    member_id varchar(36),
+    primary key (id)
+) engine=InnoDB;
+
+create table transaksi (
+   id varchar(36) not null,
+    created_date date,
+    paid bit,
+    harga_id varchar(36) not null,
+    member_id varchar(36) not null,
+    member_card_id varchar(36) not null,
     primary key (id)
 ) engine=InnoDB;
 
 create table user (
    id varchar(36) not null,
     active bit not null,
-    email varchar(255),
     fullname varchar(255),
     hp varchar(255),
+    password varchar(255),
     photo varchar(255),
     user_type varchar(255),
     username varchar(255) not null,
     primary key (id)
 ) engine=InnoDB;
 
-create table user_password (
-   id_user varchar(36) not null,
-    password varchar(255) not null,
-    primary key (id_user)
-) engine=InnoDB;
+alter table parking_system_db.member_card
+       add column nomor_kartu varchar(16);
 
-alter table permission
-   add constraint UK_4u071c8xsdwe0k6mitlb96gig unique (permission_value);
+alter table parking_system_db.member_card
+   add column qr_code varchar(255);
 
-alter table user
-   add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email);
+alter table member_card
+   add constraint UK_q943ct1fflcnn8b31xldpfx2l unique (qr_code);
 
-alter table user
-   add constraint UK_65uf1tebumngwn6338vqn505c unique (hp);
+alter table member_card
+   add constraint UK_69dmb6w2qq7uw2sl8ts3hr89o unique (nomor_kartu);
+
+alter table member
+   add constraint UK_5k89e3ig8vwbi07hmcqe7473t unique (nomor_ktp);
+
+alter table member_card
+   add constraint UK_sh87rsfunapp4bl00b74fi7fy unique (nomor_plat);
 
 alter table user
    add constraint UK_sb8bbouer5wak8vyiiy4pf2bx unique (username);
 
-alter table user_permission
-   add constraint FKr7x5g4jsd96nwq4hak8vrkeq0
-   foreign key (id_permission)
-   references permission (id);
-
-alter table user_permission
-   add constraint FKs8ps2lm408x2onohod4gnu0vl
-   foreign key (id_user)
+alter table member
+   add constraint FKswb523yn1xw3806ojrfpcyadl
+   foreign key (user_id)
    references user (id);
 
-alter table user_password
-   add constraint FKc6ej0m55bov3brbfiih66sj5i
-   foreign key (id_user)
-   references user (id);
+alter table member_card
+   add constraint FKnrtncuqhfypdeav3oot9ud573
+   foreign key (member_id)
+   references member (id);
+
+alter table transaksi
+   add constraint FKage2phg1x5qp8ghvoxg5pd8ln
+   foreign key (harga_id)
+   references harga (id);
+
+alter table transaksi
+   add constraint FKmv4k7j8iaggprpb8tdtnt16in
+   foreign key (member_id)
+   references member (id);
+
+alter table transaksi
+   add constraint FK9kwqexw9jwgpqcf2xev5v85tf
+   foreign key (member_card_id)
+   references member_card (id);

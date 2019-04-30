@@ -29,16 +29,13 @@ public class Security extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 
     private static final String SQL_ROLE
-            = "select u.username as username, p.permission_value as authority "
+            = "select u.username as username, u.user_type as authority "
             + "from user u "
-            + "inner join user_permission up on up.id_user = u.id "
-            + "inner join permission p on up.id_permission = p.id "
             + "where u.username = ?";
 
     private static final String SQL_LOGIN
-            = "select u.username as username,p.password as password, u.active as active "
+            = "select u.username as username,u.password as password, u.active as active "
             + "from user u "
-            + "inner join user_password p on p.id_user = u.id "
             + "where username = ?";
 
     @Autowired
