@@ -1,0 +1,85 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTab='MASTER',subTab='MEMBER'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">User Member</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <form th:action="@{/master/user_admin/form}" method="post" th:object="${member}" enctype="multipart/form-data">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input th:field="*{user.username}" readonly="readonly" type="email" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input th:field="*{user.fullname}" type="text" class="form-control" readonly="readonly" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Hp</label>
+                                    <input th:field="*{user.hp}" type="number" class="form-control" readonly="readonly" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <input th:value="${member.user.getStatusAktif()}" class="form-control" type="text" readonly="readonly" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <textarea th:field="*{alamat}" class="form-control" readonly="readonly"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tempat Lahir</label>
+                                    <input th:field="*{tempatLahir}" class="form-control" type="text" readonly="readonly" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Tanggal Lahir</label>
+                                    <input th:field="*{tanggalLahir}" class="form-control" type="text" readonly="readonly" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Nomor KTP</label>
+                                    <input th:field="*{nomorKtp}" class="form-control" type="text" readonly="readonly" />
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3">Foto KTP</label>
+                                    <div class="col-md-9">
+                                        <img id="ktpPreview" th:src="${member.fotoKtp != null && member.fotoKtp != ''} ? @{/image/ktp/} + ${member.fotoKtp} : @{/img/profile.png} " alt="ktpPreview" style="max-height: 200px;" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="pull-right">
+                                    <a th:href="@{/master/user_member/list}" class="btn btn-default">Kembali</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <script th:src="@{/custom/common-modal.js}"></script>
+    <!--custom javascript here-->
+</div>
+</body>
+</html>

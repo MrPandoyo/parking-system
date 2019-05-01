@@ -1,0 +1,137 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTab='MASTER',subTab='MEMBER'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">User Member</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <form th:action="@{/master/user_member/form}" method="post" th:object="${member}" enctype="multipart/form-data">
+                            <input type="hidden" th:field="*{id}"/>
+                            <input type="hidden" th:if="${member.id != null && member.id != ''}" th:field="*{user.id}"/>
+                            <input type="hidden" th:field="*{user.photo}"/>
+                            <input type="hidden" th:field="*{fotoKtp}"/>
+                            <input type="hidden" th:field="*{user.userType}"/>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input th:field="*{user.username}" th:readonly="${member.id != null && member.id != '' ? 'readonly' : 'false'}" type="email" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input th:field="*{user.fullname}" type="text" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Hp</label>
+                                    <input th:field="*{user.hp}" type="number" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Active</label>
+                                    <input th:field="*{user.active}" type="checkbox" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input th:field="*{user.password}" type="password" class="form-control" th:required="${member.id != null && member.id != ''? 'false' : 'required'}" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <textarea th:field="*{alamat}" class="form-control" required="required"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tempat Lahir</label>
+                                    <input th:field="*{tempatLahir}" type="text" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Tanggal Lahir</label>
+                                    <input th:field="*{tanggalLahir}" type="date" class="form-control" required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Nomor KTP</label>
+                                    <input th:field="*{nomorKtp}" class="form-control" type="text" required="required" />
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3">Upload KTP</label>
+                                    <div class="col-md-9">
+                                        <input type="file" class="form-control" name="filePicture" id="photoKtp" required="required" />
+                                        <span class="help-block label label-danger label-validate" style="display: none" id="photoValidate"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3"></label>
+                                    <div class="col-md-9">
+                                        <img id="ktpPreview" th:src="${member.fotoKtp != null && member.fotoKtp != ''} ? @{/image/ktp/ + ${member.fotoKtp}} : @{/img/profile.png} " alt="ktpPreview" style="max-height: 200px;" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <a th:href="@{/master/user_member/list}" class="btn btn-default">Kembali</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <script th:src="@{/custom/common-modal.js}"></script>
+    <script>
+
+        $("#photoKtp").on("change", function () {
+            var filename = $('input[type=file]').val().split('\\').pop();
+            var arrFilename = filename.split('.');
+            var ext = "";
+            for (var i = 0; i < arrFilename.length; i++) {
+                if (i === arrFilename.length - 1) {
+                    ext = arrFilename[i];
+                }
+            }
+            var arrAllowedExtension = ["png", "jpg", "jpeg"];
+            if (arrAllowedExtension.indexOf(ext.toLowerCase()) < 0) {
+                $("#photoValidate").show();
+                $("#photoValidate").html("Ekstensi yang diperbolehkan hanya [png, jpg dan jpeg]");
+                $("#ktpPreview").hide();
+                return;
+            }
+            var fileSize = $(this)[0].files[0].size;
+            if (fileSize > 2097000) {
+                $("#photoValidate").show();
+                $("#photoValidate").html("Maksimum ukuran file 2 MB");
+                $("#ktpPreview").hide();
+                return;
+            }
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#ktpPreview").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+            $("#ktpPreview").show();
+        });
+    </script>
+    <!--custom javascript here-->
+</div>
+</body>
+</html>

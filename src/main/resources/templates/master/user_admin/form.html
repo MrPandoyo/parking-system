@@ -47,13 +47,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input th:field="*{password}" type="password" class="form-control" required="required" />
+                                    <input th:field="*{password}" type="password" class="form-control" th:required="${user.id != null && user.id != ''? 'false' : 'required'}" />
                                 </div>
                             </div>
                             <div class="card-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                    <a th:href="@{/master/provinsi/list}" class="btn btn-default">Kembali</a>
+                                    <a th:href="@{/master/user_admin/list}" class="btn btn-default">Kembali</a>
                                 </div>
                             </div>
                         </form>

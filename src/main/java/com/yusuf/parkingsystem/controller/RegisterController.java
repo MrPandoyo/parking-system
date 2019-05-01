@@ -62,6 +62,9 @@ public class RegisterController {
 
             Member member = new Member();
             member.setUser(user);
+            member.setAlamat(registerDto.getAlamat());
+            member.setTempatLahir(registerDto.getTempatLahir());
+            member.setTanggalLahir(registerDto.getTanggalLahir());
             member.setNomorKtp(registerDto.getNoKtp());
             member.setFotoKtp(photoKtp);
             memberDao.save(member);

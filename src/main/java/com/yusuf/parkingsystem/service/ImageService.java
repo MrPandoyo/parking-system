@@ -102,7 +102,6 @@ public class ImageService {
         if (!folderImages.exists()) Files.createDirectories(folderImages.toPath());
 
         folder = folder +fileName+".png";
-        System.out.println("ImageService.generateQRCodeImage - qr folder= "+folder);
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
@@ -118,7 +117,7 @@ public class ImageService {
         while (tokenizer.hasMoreTokens()) {
             result = tokenizer.nextToken();
         }
-        return result+".png";
+        return result;
     }
 
 }

@@ -27,7 +27,7 @@
                                     <p>Dashboard</p>
                                 </a>
                             </li>
-                            <li class="nav-item has-treeview"
+                            <li th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}" class="nav-item has-treeview"
                                 th:classappend="${activeTab == 'MASTER' ? 'menu-open' : null}">
                                 <a href="#" class="nav-link" th:classappend="${activeTab == 'MASTER' ? 'active' : null}">
                                     <i class="nav-icon fa fa-gears"></i>
@@ -44,14 +44,20 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a th:href="@{/master/member}" class="nav-link" th:classappend="${subTab == 'MEMBER' ? 'active' : null}">
+                                        <a th:href="@{/master/user_member}" class="nav-link" th:classappend="${subTab == 'MEMBER' ? 'active' : null}">
                                             <i class="fa fa-users"></i>
                                             <p>Member</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a th:href="@{/master/harga}" class="nav-link" th:classappend="${subTab == 'HARGA' ? 'active' : null}">
+                                            <i class="fa fa-money"></i>
+                                            <p>Harga</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
+                            <li th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}" class="nav-item">
                                 <a th:href="@{/informasi_tabungan/list}" class="nav-link" th:classappend="${activeTab == 'KONFIRMASI_TRANSAKSI' ? 'active' : null}">
                                     <i class="nav-icon fa fa-th-list"></i>
                                     <p>Konfirmasi Transaksi</p>
