@@ -58,7 +58,7 @@
                                 </ul>
                             </li>
                             <li th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}" class="nav-item">
-                                <a th:href="@{/informasi_tabungan/list}" class="nav-link" th:classappend="${activeTab == 'KONFIRMASI_TRANSAKSI' ? 'active' : null}">
+                                <a th:href="@{/konfirmasi}" class="nav-link" th:classappend="${activeTab == 'KONFIRMASI' ? 'active' : null}">
                                     <i class="nav-icon fa fa-th-list"></i>
                                     <p>Konfirmasi Transaksi</p>
                                 </a>

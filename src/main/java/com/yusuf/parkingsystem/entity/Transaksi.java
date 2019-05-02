@@ -1,5 +1,6 @@
 package com.yusuf.parkingsystem.entity;
 
+import com.yusuf.parkingsystem.constant.TipeTransaksi;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.Date;
 public class Transaksi extends BaseEntity{
 
     @Temporal(TemporalType.DATE)
-    private Date createdDate;
+    private Date createdDate = new Date();
 
     @NotNull
     @ManyToOne
@@ -23,6 +24,10 @@ public class Transaksi extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TipeTransaksi tipeTransaksi;
 
     @NotNull
     @ManyToOne

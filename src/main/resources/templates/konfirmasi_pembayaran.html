@@ -1,0 +1,126 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with=" activeTab='KONFIRMASI'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Konfirmasi Transaksi</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Pembayaran Pending
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>Nama Member</th>
+                                <th>Tipe Kendaraan</th>
+                                <th>Nomor Plat</th>
+                                <th>Keterangan</th>
+                                <th>Harga</th>
+                                <th class="text-center">Action</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="data : ${datas}">
+                                    <td th:text="${data.member.user.fullname}"></td>
+                                    <td th:text="${data.memberCard.tipeKendaraan}"></td>
+                                    <td th:text="${data.memberCard.nomorPlat}"></td>
+                                    <td>
+                                        <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'NEW')}" th:text="${'Pembelian '+data.harga.durationLength+' '+data.harga.durationType}"></span>
+                                        <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'UPDATE')}" th:text="${'Perpanjangan '+data.harga.durationLength+' '+data.harga.durationType}"></span>
+                                    </td>
+                                    <td th:text="${data.harga.amount}"></td>
+                                    <td class="text-center">
+                                        <button data-toggle="modal" data-target="#modalKonfirmasi"
+                                                th:attr="data-id=${data.id},data-fullname=${data.member.user.fullname},data-tipe=${data.tipeTransaksi},data-amount=${data.harga.amount},data-duration=${data.harga.durationLength + ' - '+data.harga.durationType}"
+                                                class="btn btn-info modalKonfirmasi">Konfirmasi Pembayaran</button>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(datas)}">
+                                    <td colspan="6" class="text-center">
+                                       Data tidak ditemukan
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade bd-example-modal-lg" id="modalKonfirmasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Pembayaran</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5>
+                                        Nama Member : <span id="namaMember"></span><br/>
+                                        Deskripsi : <span id="deskripsi"></span><br/>
+                                        Harga : <span id="harga"></span><br/><br/>
+                                        <b>Apakah anda yakin Transaksi ini sudah dibayar ?</b>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="btnYes" class="btn btn-primary" >Ya</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <!--custom javascript here-->
+    <script>
+        var origin   = window.location.origin;
+        $(".modalKonfirmasi").on('click',function () {
+            var fullname = $(this).data('fullname');
+            var tipe = $(this).data('tipe');
+            var duration = $(this).data('duration');
+            var amount = $(this).data('amount');
+            var id = $(this).data('id');
+            console.log(duration);
+            function deskripsi(){
+                if(tipe == 'NEW'){
+                    return 'Pembelian kartu berdurasi '+duration;
+                }else{
+                    return 'Perpanjangan kartu selama '+duration;
+                }
+            }
+            $("#namaMember").text(fullname);
+            $("#deskripsi").text(deskripsi());
+            $("#harga").text(amount);
+            $("#btnYes").attr('href',origin+'/konfirmasi/'+id);
+        })
+    </script>
+</div>
+</body>
+</html>

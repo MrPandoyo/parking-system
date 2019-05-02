@@ -108,7 +108,7 @@ public class ImageService {
 
         Path path = FileSystems.getDefault().getPath(folder);
         MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-        return fileName;
+        return fileName+".png";
     }
 
     public String tokenizer(String originalFilename, String token) {

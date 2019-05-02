@@ -1,0 +1,47 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with=" activeTab='DASHBOARD'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Member Card</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3>Member Card telah dibuat</h3>
+                            <h4>Silahkan bayar Ke rekening dibawah</h4>
+                            <h3>Bank BCA : 0383129348</h3>
+                            <h4>Nominal : <span th:text="${transaksi.harga.amount}"></span></h4>
+                            <hr/>
+                            <img th:src="@{/image/qr_code/} + ${transaksi.memberCard.qrCode}" alt="QR Code" />
+                            <hr/>
+                            <h4>Jika sudah membayar, Berikan QR Code diatas ke loket untuk mengambil kartu</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <!--custom javascript here-->
+</div>
+</body>
+</html>

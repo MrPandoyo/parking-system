@@ -1,0 +1,81 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTab='MASTER',subTab='HARGA'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Harga</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <a th:href="@{/master/harga/form}" class="btn btn-primary" title="Tambah Harga"><i class="fa fa-plus"></i></a>
+                            </div>
+                            <div class="card-tools" style="padding-top: 5px;">
+                                <form th:action="@{/master/harga}">
+                                    <div class="input-group input-group-sm" style="width: 250px;">
+                                        <input type="text" name="value" th:value="${value}" class="form-control float-right" placeholder="Cari berdasarkan nama...">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>Nama</th>
+                                <th>Durasi</th>
+                                <th>Harga</th>
+                                <th class="text-center">Action</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="data : ${datas}">
+                                    <td th:text="${data.nama}"></td>
+                                    <td th:text="${data.durationLength+ ' '+data.durationType}"></td>
+                                    <td th:text="${data.amount}"></td>
+                                    <td class="text-center">
+                                        <a th:href="@{/master/harga/form(id = ${data.id})}" title="Edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                        <a th:href="@{/master/harga/delete(id=${data.id})}" data-title="Konfirmasi Hapus" title="Hapus" class="btn btn-danger deleteData"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(datas.content)}">
+                                    <td colspan="4" class="text-center">Data tidak ditemukan.</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer clearfix">
+                            <ul th:if="${not #lists.isEmpty(datas.content)}" class="pagination pagination-sm m-0 float-right" sd:pagination="full"></ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <script th:src="@{/custom/common-modal.js}"></script>
+    <!--custom javascript here-->
+</div>
+</body>
+</html>

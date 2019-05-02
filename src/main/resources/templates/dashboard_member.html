@@ -1,0 +1,104 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with=" activeTab='DASHBOARD'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Dashboard</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Member Card saat ini
+                                <a th:href="@{/dashboard_member/tambah_kartu}" class="btn btn-primary pull-right" title="Tambah Member Card"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>No. Plat</th>
+                                <th>Tipe Kendaraan</th>
+                                <th>Status</th>
+                                <th>Expired Date</th>
+                                <th class="text-center">Action</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="data : ${datas}">
+                                    <td th:text="${data.nomorPlat}"></td>
+                                    <td th:text="${data.tipeKendaraan}"></td>
+                                    <td>
+                                        <span class="label label-success" th:if="${data.getActive()}">Active</span>
+                                        <span class="label label-danger" th:if="${!data.getActive()}">Inactive</span>
+                                    </td>
+                                    <td th:text="${data.expiredDate != null ? data.expiredDate : ' - '}"></td>
+                                    <td class="text-center">
+                                        <button data-toggle="modal" data-target="#modalQr" th:attr="data-value=${data.qrCode}" class="btn btn-info modalQr">Lihat QR Code</button>
+                                        <a th:if="${data.getActive()}" th:href="@{/perpanjang_kartu(id = ${data.id})}" title="Perpanjang" class="btn btn-warning"><i class="fa fa-clock-o"></i> Perpanjang</a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(datas)}">
+                                    <td colspan="5" class="text-center">
+                                        <a th:href="@{/dashboard_member/tambah_kartu}">Click disini untuk membuat Member Card</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalQr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <img id="qrImg" th:src="@{/img/profile.png}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <!--custom javascript here-->
+    <script>
+        var origin   = window.location.origin;
+
+        $(".modalQr").on('click',function () {
+            var img = $(this).data('value');
+            $("#qrImg").attr('src',origin+'/image/qr_code/'+img);
+        })
+    </script>
+</div>
+</body>
+</html>

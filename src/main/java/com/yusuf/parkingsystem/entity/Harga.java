@@ -3,8 +3,9 @@ package com.yusuf.parkingsystem.entity;
 import com.yusuf.parkingsystem.constant.DurationType;
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -22,9 +23,9 @@ public class Harga extends BaseEntity{
     private BigDecimal amount = BigDecimal.ZERO;
 
     @NotNull
-    @Column(length = 1)
     private int durationLength;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private DurationType durationType;
 }

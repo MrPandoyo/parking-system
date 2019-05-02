@@ -1,7 +1,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}" th:with="activeTab='MASTER',subTab='USER_ADMIN'">
+        layout:decorate="~{layout}" th:with="activeTab='DASHBOARD'">
 <body>
 <div layout:fragment="customCss">
     <!--custom css here-->
@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">User Admin</h1>
+                    <h1 class="m-0 text-dark">Tambah Member Card</h1>
                 </div>
             </div>
         </div>
@@ -24,30 +24,25 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-default">
-                        <form th:action="@{/master/user_admin/form}" method="post" th:object="${user}">
-                            <input type="hidden" th:field="*{id}"/>
-                            <input type="hidden" th:field="*{photo}"/>
-                            <input type="hidden" th:field="*{userType}"/>
+                        <form th:action="@{/dashboard_member/tambah_kartu}" method="post" th:object="${cardDto}">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Username</label>
-                                    <input th:field="*{username}" th:readonly="${user.id != null && user.id != '' ? 'readonly' : 'false'}" type="email" class="form-control" required="required" />
+                                    <label>Tipe Kendaraan</label>
+                                    <select th:field="*{tipeKendaraan}" class="form-control">
+                                        <option value="RODA_DUA">Roda 2</option>
+                                        <option value="RODA_EMPAT">Roda 4</option>
+                                        <option value="RODA_EMPAT_LEBIH">Roda 4+</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Nama</label>
-                                    <input th:field="*{fullname}" type="text" class="form-control" required="required" />
+                                    <label>Nomor Plat</label>
+                                    <input th:field="*{nomorPlat}" type="text" class="form-control" required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Hp</label>
-                                    <input th:field="*{hp}" type="number" class="form-control" required="required" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Active</label>
-                                    <input th:field="*{active}" type="checkbox" required="required" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input th:field="*{password}" type="password" class="form-control" th:required="${user.id != null && user.id != ''? 'false' : 'required'}" />
+                                    <label>Pilih Durasi Kartu <small>bisa diperpanjang</small></label>
+                                    <select th:field="*{harga}" class="form-control">
+                                        <option th:each="harga : ${hargas}" th:value="${harga.id}" th:text="${harga.nama+' - '+harga.amount}">Roda 2</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="card-footer">

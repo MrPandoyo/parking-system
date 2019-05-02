@@ -2,7 +2,7 @@
        id varchar(36) not null,
         amount decimal(19,2) not null,
         duration_length integer not null,
-        duration_type integer not null,
+        duration_type varchar(255) not null,
         nama varchar(255),
         primary key (id)
     ) engine=InnoDB;
@@ -37,6 +37,7 @@
        id varchar(36) not null,
         created_date date,
         paid bit,
+        tipe_transaksi varchar(255) not null,
         harga_id varchar(36) not null,
         member_id varchar(36) not null,
         member_card_id varchar(36) not null,

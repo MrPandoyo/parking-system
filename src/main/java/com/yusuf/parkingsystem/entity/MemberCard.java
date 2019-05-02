@@ -26,7 +26,7 @@ public class MemberCard extends BaseEntity{
 
     @NotEmpty
     @Column(unique = true, length = 16)
-    private String nomorKartu = UUID.randomUUID().toString().substring(0,15);
+    private String nomorKartu = UUID.randomUUID().toString().replaceAll("-","").substring(0,15);
 
     @NotEmpty
     @Column(unique = true)
@@ -37,5 +37,13 @@ public class MemberCard extends BaseEntity{
 
     @Temporal(TemporalType.DATE)
     private Date expiredDate;
+
+    public Boolean getActive(){
+        if(this.expiredDate != null && this.expiredDate.compareTo(new Date()) > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 }

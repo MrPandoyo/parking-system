@@ -20,11 +20,11 @@ public class ImageController {
     @Autowired
     private ImageService imgService;
 
-    @GetMapping("/profile/{filename:.+}")
+    @GetMapping("/{type}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveProfileImage(@PathVariable String filename) {
+    public ResponseEntity<Resource> serveProfileImage(@PathVariable String type, @PathVariable String filename) {
         try {
-            Resource file = imgService.loadAsResource(filename, ImageService.PROFILE);
+            Resource file = imgService.loadAsResource(filename, type);
             return ResponseEntity
                     .ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "filename=\"" + file.getFilename() + "\"")
@@ -35,19 +35,4 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/ktp/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveKtpImage(@PathVariable String filename) {
-        try {
-            Resource file = imgService.loadAsResource(filename, ImageService.KTP);
-            return ResponseEntity
-                    .ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "filename=\"" + file.getFilename() + "\"")
-                    .body(file);
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-    
 }
