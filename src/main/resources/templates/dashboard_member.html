@@ -50,12 +50,49 @@
                                     <td th:text="${data.expiredDate != null ? data.expiredDate : ' - '}"></td>
                                     <td class="text-center">
                                         <button data-toggle="modal" data-target="#modalQr" th:attr="data-value=${data.qrCode}" class="btn btn-info modalQr">Lihat QR Code</button>
-                                        <a th:if="${data.getActive()}" th:href="@{/perpanjang_kartu(id = ${data.id})}" title="Perpanjang" class="btn btn-warning"><i class="fa fa-clock-o"></i> Perpanjang</a>
+                                        <a th:if="${data.getActive()}" th:href="@{/dashboard_member/perpanjang_kartu(id = ${data.id})}" title="Perpanjang" class="btn btn-warning"><i class="fa fa-clock-o"></i> Perpanjang</a>
                                     </td>
                                 </tr>
                                 <tr th:if="${#lists.isEmpty(datas)}">
                                     <td colspan="5" class="text-center">
                                         <a th:href="@{/dashboard_member/tambah_kartu}">Click disini untuk membuat Member Card</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Pembayaran Pending
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>Waktu Pembuatan</th>
+                                <th>Tipe Kendaraan</th>
+                                <th>Nomor Plat</th>
+                                <th>Keterangan</th>
+                                <th>Harga</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="data : ${transaksis}">
+                                    <td th:text="${data.createdDate}"></td>
+                                    <td th:text="${data.memberCard.tipeKendaraan}"></td>
+                                    <td th:text="${data.memberCard.nomorPlat}"></td>
+                                    <td>
+                                        <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'NEW')}" th:text="${'Pembelian '+data.harga.durationLength+' '+data.harga.durationType}"></span>
+                                        <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'UPDATE')}" th:text="${'Perpanjangan '+data.harga.durationLength+' '+data.harga.durationType}"></span>
+                                    </td>
+                                    <td th:text="${data.harga.amount}"></td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(datas)}">
+                                    <td colspan="6" class="text-center">
+                                        Data tidak ditemukan
                                     </td>
                                 </tr>
                                 </tbody>

@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="pull-right">
                         <a th:href="@{/dashboard_member}" class="btn btn-primary"><span class="fa fa-arrow-left"></span> Kembali</a>
-                        <a th:href="@{/dashboard_member/print_transaksi(id=${transaksi.id})}" class="btn btn-info"><span class="fa fa-print"></span> Print</a>
+                        <a target="_blank" th:href="@{/dashboard_member/print_transaksi(id=${transaksi.id})}" class="btn btn-info"><span class="fa fa-print"></span> Print</a>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h3>Member Card telah dibuat</h3>
+                            <h3>Transaksi Issue telah dibuat</h3>
                             <h4>Silahkan bayar Ke rekening dibawah</h4>
                             <h3>Bank BCA : 0383129348</h3>
                             <h4>Nominal : <span th:text="${transaksi.harga.amount}"></span></h4>

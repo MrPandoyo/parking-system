@@ -12,7 +12,7 @@
                 <div class="sidebar slimScroll">
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img th:src="${loggedUser.photo != null && loggedUser.photo != ''} ? @{/image/profile/+${loggerUser.photo}} : @{/img/profile.png}" class="img-circle elevation-2" alt="User Image">
+                            <img th:src="${loggedUser.photo != null && loggedUser.photo != ''} ? @{/image/profile/}+${loggedUser.photo} : @{/img/profile.png}" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
                             <a href="#" class="d-block" th:text="${loggedUser.fullname}">Alexander Pierce</a>
@@ -25,6 +25,12 @@
                                 <a th:href="@{/}" class="nav-link" th:classappend="${activeTab == 'DASHBOARD' ? 'active' : null}">
                                     <i class="nav-icon fa fa-dashboard"></i>
                                     <p>Dashboard</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/profile}" class="nav-link" th:classappend="${activeTab == 'PROFILE' ? 'active' : null}">
+                                    <i class="nav-icon fa fa-cog"></i>
+                                    <p>Profile</p>
                                 </a>
                             </li>
                             <li th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}" class="nav-item has-treeview"
@@ -64,7 +70,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a th:href="@{/informasi_tabungan/list}" class="nav-link" th:classappend="${activeTab == 'LAPORAN_TRANSAKSI' ? 'active' : null}">
+                                <a th:href="@{/laporan_transaksi}" class="nav-link" th:classappend="${activeTab == 'LAPORAN_TRANSAKSI' ? 'active' : null}">
                                     <i class="nav-icon fa fa-list-alt"></i>
                                     <p>Laporan Transaksi</p>
                                 </a>

@@ -35,7 +35,9 @@ public class DashoardMemberController {
 
     @GetMapping
     public String showDashboard(Principal principal, ModelMap modelMap){
+
         modelMap.addAttribute("datas",memberCardDao.findByMemberUserUsername(principal.getName()));
+        modelMap.addAttribute("transaksis",transaksiDao.findByPaidAndMemberUserUsername(false,principal.getName()));
         return "dashboard_member";
     }
 
@@ -58,7 +60,8 @@ public class DashoardMemberController {
         memberCard.setNomorPlat(cardDto.getNomorPlat());
 
         try {
-            String qrCode = imageService.generateQRCodeImage(memberCard.getNomorKartu(),400,400);
+            String url = "http://localhost:8080/info_card/"+memberCard.getNomorKartu();
+            String qrCode = imageService.generateQRCodeImage(url,400,400);
             memberCard.setQrCode(qrCode);
             memberCard = memberCardDao.save(memberCard);
 
@@ -67,6 +70,9 @@ public class DashoardMemberController {
             transaksi.setMemberCard(memberCard);
             transaksi.setTipeTransaksi(TipeTransaksi.NEW);
             transaksi.setHarga(cardDto.getHarga());
+            transaksi.setNamaBank(cardDto.getNamaBank());
+            transaksi.setNamaPemilikRekening(cardDto.getNamaPemilikRekening());
+            transaksi.setNomorRekening(cardDto.getNomorRekening());
 
             transaksi = transaksiDao.save(transaksi);
             redirectAttributes.addFlashAttribute("transaksi",transaksi);
@@ -77,6 +83,37 @@ public class DashoardMemberController {
             modelMap.addAttribute("hargas", hargaDao.findAll());
         }
 
+        return "redirect:/dashboard_member/pembuatan_berhasil";
+    }
+
+    @GetMapping("/perpanjang_kartu")
+    public String showForm(@RequestParam String id, ModelMap modelMap){
+
+        MemberCard card = memberCardDao.findById(id).get();
+        Transaksi transaksi = new Transaksi();
+        transaksi.setMemberCard(card);
+        transaksi.setMember(card.getMember());
+
+        modelMap.addAttribute("transaksi",transaksi);
+        modelMap.addAttribute("hargas", hargaDao.findAll());
+        return "perpanjang_form";
+    }
+
+    @Transactional
+    @PostMapping("/perpanjang_kartu")
+    public String savePerpanjang(Transaksi transaksi, RedirectAttributes redirectAttributes) {
+
+        MemberCard memberCard = memberCardDao.findById(transaksi.getMemberCard().getId()).get();
+        Member member = memberCard.getMember();
+        try{
+            transaksi.setMember(member);
+            transaksi.setMemberCard(memberCard);
+            transaksi.setTipeTransaksi(TipeTransaksi.UPDATE);
+            transaksiDao.save(transaksi);
+            redirectAttributes.addFlashAttribute("transaksi",transaksi);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "redirect:/dashboard_member/pembuatan_berhasil";
     }
 

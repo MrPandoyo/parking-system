@@ -12,5 +12,8 @@ public class CreateCardDto {
     private TipeKendaraan tipeKendaraan;
     private String nomorPlat;
     private Harga harga;
+    private String namaBank;
+    private String namaPemilikRekening;
+    private String nomorRekening;
 
 }

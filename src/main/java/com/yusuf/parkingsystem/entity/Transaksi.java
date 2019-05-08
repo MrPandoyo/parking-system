@@ -35,4 +35,8 @@ public class Transaksi extends BaseEntity{
 
     private Boolean paid = Boolean.FALSE;
 
+    private String namaBank;
+    private String namaPemilikRekening;
+    private String nomorRekening;
+
 }

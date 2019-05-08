@@ -1,0 +1,92 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with=" activeTab='LAPORAN_TRANSAKSI'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">History Transaksi</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Transaksi selesai
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}">Nama Member</th>
+                                <th>Tipe Kendaraan</th>
+                                <th>Nomor Plat</th>
+                                <th>Keterangan</th>
+                                <th>Harga</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="data : ${datas}">
+                                    <td th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}" th:text="${data.member.user.fullname}"></td>
+                                    <td th:text="${data.memberCard.tipeKendaraan}"></td>
+                                    <td th:text="${data.memberCard.nomorPlat}"></td>
+                                    <td>
+                                        <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'NEW')}" th:text="${'Pembelian '+data.harga.durationLength+' '+data.harga.durationType}"></span>
+                                        <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'UPDATE')}" th:text="${'Perpanjangan '+data.harga.durationLength+' '+data.harga.durationType}"></span>
+                                    </td>
+                                    <td th:text="${data.harga.amount}"></td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(datas)}">
+                                    <td colspan="5" class="text-center">
+                                        Data tidak ditemukan
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <!--custom javascript here-->
+    <script>
+        var origin   = window.location.origin;
+        $(".modalKonfirmasi").on('click',function () {
+            var fullname = $(this).data('fullname');
+            var tipe = $(this).data('tipe');
+            var duration = $(this).data('duration');
+            var amount = $(this).data('amount');
+            var id = $(this).data('id');
+            console.log(duration);
+            function deskripsi(){
+                if(tipe == 'NEW'){
+                    return 'Pembelian kartu berdurasi '+duration;
+                }else{
+                    return 'Perpanjangan kartu selama '+duration;
+                }
+            }
+            $("#namaMember").text(fullname);
+            $("#deskripsi").text(deskripsi());
+            $("#harga").text(amount);
+            $("#btnYes").attr('href',origin+'/konfirmasi/'+id);
+        })
+    </script>
+</div>
+</body>
+</html>

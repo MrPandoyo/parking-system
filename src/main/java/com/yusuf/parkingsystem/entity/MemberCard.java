@@ -1,5 +1,6 @@
 package com.yusuf.parkingsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yusuf.parkingsystem.constant.TipeKendaraan;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class MemberCard extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @JsonIgnore
     private Member member;
 
     @Enumerated(value = EnumType.STRING)

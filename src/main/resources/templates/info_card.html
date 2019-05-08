@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Invoice Pesanan Member Card</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 4 -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<div class="wrapper">
+    <!-- Main content -->
+    <section class="invoice">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h3>Member Card</h3>
+                        <h3>Status -
+                            <span class="label label-success" th:if="${data.getActive()}">Active / Paid</span>
+                            <span class="label label-danger" th:if="${!data.getActive()}">Inactive / Unpaid</span>
+                        </h3>
+                        <h4>Nama Member : <span th:text="${card.member.user.fullname}"></span></h4>
+                        <h4>Nomor Plat : <span th:text="${card.nomorPlat}"></span></h4>
+                        <h4>Nomor Kartu : <span th:text="${card.nomorKartu}"></span></h4>
+                        <h4>Created Date : <span th:text="${card.createdDate}"></span></h4>
+                        <h4>Expired Date : <span th:text="${card.expiredDate}"></span></h4>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- ./wrapper -->
+</body>
+</html>
