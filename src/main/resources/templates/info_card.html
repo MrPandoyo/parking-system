@@ -27,8 +27,8 @@
                     <div class="card-body text-center">
                         <h3>Member Card</h3>
                         <h3>Status -
-                            <span class="label label-success" th:if="${data.getActive()}">Active / Paid</span>
-                            <span class="label label-danger" th:if="${!data.getActive()}">Inactive / Unpaid</span>
+                            <span class="label label-success" th:if="${card.getActive()}">Active / Paid</span>
+                            <span class="label label-danger" th:if="${!card.getActive()}">Inactive / Unpaid</span>
                         </h3>
                         <h4>Nama Member : <span th:text="${card.member.user.fullname}"></span></h4>
                         <h4>Nomor Plat : <span th:text="${card.nomorPlat}"></span></h4>
