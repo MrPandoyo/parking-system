@@ -69,6 +69,12 @@
                                     <p>Konfirmasi Transaksi</p>
                                 </a>
                             </li>
+                            <li class="nav-item" th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}">
+                                <a th:href="@{/member_cards}" class="nav-link" th:classappend="${activeTab == 'MEMBER_CARD' ? 'active' : null}">
+                                    <i class="nav-icon fa fa-id-card"></i>
+                                    <p>List Member Card</p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a th:href="@{/laporan_transaksi}" class="nav-link" th:classappend="${activeTab == 'LAPORAN_TRANSAKSI' ? 'active' : null}">
                                     <i class="nav-icon fa fa-list-alt"></i>

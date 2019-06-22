@@ -1,0 +1,82 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with=" activeTab='MEMBER_CARD'">
+<body>
+<div layout:fragment="customCss">
+    <!--custom css here-->
+</div>
+
+<div layout:fragment="pageHeader">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">List Member Card</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="content">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <form th:action="@{/member_cards}" th:object="${params}">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select th:field="*{status}" class="form-control">
+                                        <option value="">None</option>
+                                        <option value="true">Active</option>
+                                        <option value="false">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="pull-right">
+                                    <a class="btn btn-primary" target="_blank" th:href="@{/member_cards/print}"><i class="fa fa-print"></i> Print</a>
+                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <th th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}">Nama User</th>
+                                <th>No. Plat</th>
+                                <th>Tipe Kendaraan</th>
+                                <th>Status</th>
+                                <th>Expired Date</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="data : ${cards}">
+                                    <th th:if="${#strings.equalsIgnoreCase(loggedUser.userType,'ADMIN')}" th:text="${data.member.user.fullname}"></th>
+                                    <td th:text="${data.nomorPlat}"></td>
+                                    <td th:text="${data.tipeKendaraan}"></td>
+                                    <td>
+                                        <span class="label label-success" th:if="${data.getActive()}">Active</span>
+                                        <span class="label label-danger" th:if="${!data.getActive()}">Inactive</span>
+                                    </td>
+                                    <td th:text="${data.expiredDate != null ? data.expiredDate : ' - '}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div layout:fragment="customJavascript">
+    <!--custom javascript here-->
+</div>
+</body>
+</html>
