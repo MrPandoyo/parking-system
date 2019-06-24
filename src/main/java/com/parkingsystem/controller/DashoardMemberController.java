@@ -1,11 +1,9 @@
 package com.parkingsystem.controller;
 
-import com.parkingsystem.dao.HargaDao;
-import com.parkingsystem.dao.MemberCardDao;
-import com.parkingsystem.dao.MemberDao;
+import com.parkingsystem.dao.*;
 import com.parkingsystem.dto.CreateCardDto;
 import com.parkingsystem.constant.TipeTransaksi;
-import com.parkingsystem.dao.TransaksiDao;
+import com.parkingsystem.entity.BuktiBayar;
 import com.parkingsystem.entity.Member;
 import com.parkingsystem.entity.MemberCard;
 import com.parkingsystem.entity.Transaksi;
@@ -13,10 +11,12 @@ import com.parkingsystem.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
@@ -30,6 +30,7 @@ public class DashoardMemberController {
     @Autowired private MemberDao memberDao;
     @Autowired private HargaDao hargaDao;
     @Autowired private TransaksiDao transaksiDao;
+    @Autowired private BuktiBayarDao buktiBayarDao;
 
     @Autowired private ImageService imageService;
 
@@ -127,6 +128,40 @@ public class DashoardMemberController {
         Transaksi transaksi = transaksiDao.findById(id).get();
         modelMap.addAttribute("transaksi",transaksi);
         return "print_trx";
+    }
+
+    @GetMapping("/bukti_pembayaran")
+    public String showBuktiPembayaran(@RequestParam String id, ModelMap modelMap){
+
+        Transaksi transaksi = transaksiDao.findById(id).get();
+        if(transaksi.getBuktiBayarList().isEmpty()){
+            BuktiBayar buktiBayar = new BuktiBayar();
+            buktiBayar.setTransaksi(transaksi);
+            modelMap.addAttribute("bukti",buktiBayar);
+        }else{
+            modelMap.addAttribute("bukti",transaksi.getBuktiBayarList().get(0));
+        }
+        return "bukti_pembayaran";
+    }
+
+    @PostMapping("/bukti_pembayaran")
+    public String postBuktiPembayaran(BuktiBayar bukti, ModelMap modelMap, RedirectAttributes redirectAttributes, MultipartFile photoBukti){
+
+        try{
+            if(!photoBukti.isEmpty()){
+                String foto = imageService.uploadImage(photoBukti, ImageService.BUKTI_BAYAR);
+                bukti.setFoto(foto);
+            }
+            buktiBayarDao.save(bukti);
+            redirectAttributes.addAttribute("successMessage","Bukti pembayaran telah disimpan");
+        }catch (Exception e){
+            e.printStackTrace();
+            modelMap.addAttribute("bukti",bukti);
+            modelMap.addAttribute("errorMessage",e.getMessage());
+            return "bukti_pembayaran";
+        }
+
+        return "redirect:/";
     }
 
 }

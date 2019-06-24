@@ -56,6 +56,19 @@ create table user (
     primary key (id)
 ) engine=InnoDB;
 
+create table bukti_bayar (
+   id varchar(36) not null,
+    comment varchar(255),
+    foto varchar(255),
+    transaksi_id varchar(36),
+    primary key (id)
+) engine=InnoDB;
+
+alter table bukti_bayar
+   add constraint FKj2yyyg4ohu88pn3rabfwfwx05
+   foreign key (transaksi_id)
+   references transaksi (id);
+
 alter table member
    add constraint UK_5k89e3ig8vwbi07hmcqe7473t unique (nomor_ktp);
 

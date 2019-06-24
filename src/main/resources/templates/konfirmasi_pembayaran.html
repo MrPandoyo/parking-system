@@ -40,7 +40,7 @@
                                 <th class="text-center">Action</th>
                                 </thead>
                                 <tbody>
-                                <tr th:each="data : ${datas}">
+                                <tr th:each="data,i : ${datas}">
                                     <td th:text="${data.member.user.fullname}"></td>
                                     <td th:text="${data.memberCard.tipeKendaraan}"></td>
                                     <td th:text="${data.memberCard.nomorPlat}"></td>
@@ -53,6 +53,32 @@
                                         <button data-toggle="modal" data-target="#modalKonfirmasi"
                                                 th:attr="data-id=${data.id},data-fullname=${data.member.user.fullname},data-tipe=${data.tipeTransaksi},data-amount=${data.harga.amount},data-duration=${data.harga.durationLength + ' - '+data.harga.durationType}"
                                                 class="btn btn-info modalKonfirmasi">Konfirmasi Pembayaran</button>
+                                        <button th:if="${!#lists.isEmpty(data.buktiBayarList)}" data-toggle="modal"
+                                                th:attr="data-target='#modalBukti_'+${i.index}" class="btn btn-primary">Bukti Pembayaran</button>
+                                        <div th:if="${!#lists.isEmpty(data.buktiBayarList)}" class="modal fade bd-example-modal-lg" th:id="'modalBukti_' +${i.index} " tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Bukti Pembayaran</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>
+                                                                    <img style="width: 100%; height: 100%" th:src="@{/image/bukti_bayar/} + ${data.buktiBayarList[0].foto}" class="img-responsive"/>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr th:if="${#lists.isEmpty(datas)}">

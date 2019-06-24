@@ -33,6 +33,7 @@
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <thead>
+                                <th>No. Kartu</th>
                                 <th>No. Plat</th>
                                 <th>Tipe Kendaraan</th>
                                 <th>Status</th>
@@ -41,6 +42,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="data : ${datas}">
+                                    <td th:text="${data.nomorKartu}"></td>
                                     <td th:text="${data.nomorPlat}"></td>
                                     <td th:text="${data.tipeKendaraan}"></td>
                                     <td>
@@ -49,12 +51,11 @@
                                     </td>
                                     <td th:text="${data.expiredDate != null ? data.expiredDate : ' - '}"></td>
                                     <td class="text-center">
-                                        <button data-toggle="modal" data-target="#modalQr" th:attr="data-value=${data.qrCode}" class="btn btn-info modalQr">Lihat QR Code</button>
                                         <a th:if="${data.getActive()}" th:href="@{/dashboard_member/perpanjang_kartu(id = ${data.id})}" title="Perpanjang" class="btn btn-warning"><i class="fa fa-clock-o"></i> Perpanjang</a>
                                     </td>
                                 </tr>
                                 <tr th:if="${#lists.isEmpty(datas)}">
-                                    <td colspan="5" class="text-center">
+                                    <td colspan="6" class="text-center">
                                         <a th:href="@{/dashboard_member/tambah_kartu}">Click disini untuk membuat Member Card</a>
                                     </td>
                                 </tr>
@@ -78,6 +79,7 @@
                                 <th>Nomor Plat</th>
                                 <th>Keterangan</th>
                                 <th>Harga</th>
+                                <th class="text-center">Action</th>
                                 </thead>
                                 <tbody>
                                 <tr th:each="data : ${transaksis}">
@@ -89,6 +91,10 @@
                                         <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'UPDATE')}" th:text="${'Perpanjangan '+data.harga.durationLength+' '+data.harga.durationType}"></span>
                                     </td>
                                     <td th:text="${data.harga.amount}"></td>
+                                    <td nowrap class="text-center">
+                                        <a th:href="@{/dashboard_member/bukti_pembayaran(id=${data.id})}" class="btn btn-primary">Konfirmasi Pembayaran</a>
+                                        &nbsp;
+                                    </td>
                                 </tr>
                                 <tr th:if="${#lists.isEmpty(datas)}">
                                     <td colspan="6" class="text-center">

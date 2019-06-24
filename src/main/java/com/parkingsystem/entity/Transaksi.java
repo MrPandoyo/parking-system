@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Table
@@ -39,4 +40,6 @@ public class Transaksi extends BaseEntity{
     private String namaPemilikRekening;
     private String nomorRekening;
 
+    @OneToMany(mappedBy = "transaksi", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BuktiBayar> buktiBayarList;
 }

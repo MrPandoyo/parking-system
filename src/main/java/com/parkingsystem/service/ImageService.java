@@ -31,6 +31,7 @@ public class ImageService {
     public static final String ORIGINALPREFIX = "ori-";
 
     public static final String PROFILE = "profile";
+    public static final String BUKTI_BAYAR = "bukti_bayar";
     public static final String KTP = "ktp";
     public static final String QR_CODE = "qr_code";
 

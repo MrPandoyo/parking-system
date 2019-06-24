@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="pull-right">
                         <a th:href="@{/dashboard_member}" class="btn btn-primary"><span class="fa fa-arrow-left"></span> Kembali</a>
-                        <a target="_blank" th:href="@{/dashboard_member/print_transaksi(id=${transaksi.id})}" class="btn btn-info"><span class="fa fa-print"></span> Print</a>
+                        <!--<a target="_blank" th:href="@{/dashboard_member/print_transaksi(id=${transaksi.id})}" class="btn btn-info"><span class="fa fa-print"></span> Print</a>-->
                     </div>
                 </div>
             </div>
@@ -35,10 +35,10 @@
                             <h4>Silahkan bayar Ke rekening dibawah</h4>
                             <h3>Bank BCA : 0383129348</h3>
                             <h4>Nominal : <span th:text="${transaksi.harga.amount}"></span></h4>
+                            <!--<hr/>-->
+                            <!--<img th:src="@{/image/qr_code/} + ${transaksi.memberCard.qrCode}" alt="QR Code" />-->
                             <hr/>
-                            <img th:src="@{/image/qr_code/} + ${transaksi.memberCard.qrCode}" alt="QR Code" />
-                            <hr/>
-                            <h4>Jika sudah membayar, Berikan QR Code diatas ke loket untuk mengambil kartu</h4>
+                            <h4>Jika sudah membayar, Silahkan mengirim bukti pembayaran <a th:href="@{/dashboard_member/bukti_pembayaran(id=${transaksi.id})}">disini</a></h4>
                         </div>
                     </div>
                 </div>
