@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,9 @@ public class Transaksi extends BaseEntity{
     @ManyToOne
     private Harga harga;
 
+    @NotNull
+    private BigDecimal generatedFee = BigDecimal.ZERO;
+
     private Boolean paid = Boolean.FALSE;
 
     private String namaBank;
@@ -42,4 +46,9 @@ public class Transaksi extends BaseEntity{
 
     @OneToMany(mappedBy = "transaksi", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BuktiBayar> buktiBayarList;
+
+    public BigDecimal getAmount(){
+        BigDecimal result = this.harga.getAmount().add(generatedFee);
+        return result;
+    }
 }

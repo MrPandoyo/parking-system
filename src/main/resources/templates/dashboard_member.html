@@ -90,7 +90,7 @@
                                         <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'NEW')}" th:text="${'Pembelian '+data.harga.durationLength+' '+data.harga.durationType}"></span>
                                         <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'UPDATE')}" th:text="${'Perpanjangan '+data.harga.durationLength+' '+data.harga.durationType}"></span>
                                     </td>
-                                    <td th:text="${data.harga.amount}"></td>
+                                    <td th:text="'Rp. '+${#numbers.formatDecimal(data.getAmount(), 0, 'COMMA', 0, 'POINT')}"></td>
                                     <td nowrap class="text-center">
                                         <a th:href="@{/dashboard_member/bukti_pembayaran(id=${data.id})}" class="btn btn-primary">Konfirmasi Pembayaran</a>
                                         &nbsp;

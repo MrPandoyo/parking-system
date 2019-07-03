@@ -34,7 +34,7 @@
                             <h3>Transaksi Issue telah dibuat</h3>
                             <h4>Silahkan bayar Ke rekening dibawah</h4>
                             <h3>Bank BCA : 0383129348</h3>
-                            <h4>Nominal : <span th:text="${transaksi.harga.amount}"></span></h4>
+                            <h4>Nominal : <span th:text="'Rp. '+${#numbers.formatDecimal(transaksi.getAmount(), 0, 'COMMA', 0, 'POINT')}"></span></h4>
                             <!--<hr/>-->
                             <!--<img th:src="@{/image/qr_code/} + ${transaksi.memberCard.qrCode}" alt="QR Code" />-->
                             <hr/>

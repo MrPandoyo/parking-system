@@ -1,0 +1,1 @@
+ALTER TABLE transaksi ADD COLUMN generated_fee decimal(19,2) default 0;

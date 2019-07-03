@@ -8,6 +8,7 @@ import com.parkingsystem.entity.Member;
 import com.parkingsystem.entity.MemberCard;
 import com.parkingsystem.entity.Transaksi;
 import com.parkingsystem.service.ImageService;
+import com.parkingsystem.service.TransaksiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +34,7 @@ public class DashoardMemberController {
     @Autowired private BuktiBayarDao buktiBayarDao;
 
     @Autowired private ImageService imageService;
+    @Autowired private TransaksiService transaksiService;
 
     @GetMapping
     public String showDashboard(Principal principal, ModelMap modelMap){
@@ -71,6 +73,7 @@ public class DashoardMemberController {
             transaksi.setMemberCard(memberCard);
             transaksi.setTipeTransaksi(TipeTransaksi.NEW);
             transaksi.setHarga(cardDto.getHarga());
+            transaksi.setGeneratedFee(transaksiService.generateRandom3Digit());
             transaksi.setNamaBank(cardDto.getNamaBank());
             transaksi.setNamaPemilikRekening(cardDto.getNamaPemilikRekening());
             transaksi.setNomorRekening(cardDto.getNomorRekening());
@@ -110,6 +113,7 @@ public class DashoardMemberController {
             transaksi.setMember(member);
             transaksi.setMemberCard(memberCard);
             transaksi.setTipeTransaksi(TipeTransaksi.UPDATE);
+            transaksi.setGeneratedFee(transaksiService.generateRandom3Digit());
             transaksiDao.save(transaksi);
             redirectAttributes.addFlashAttribute("transaksi",transaksi);
         }catch (Exception e){

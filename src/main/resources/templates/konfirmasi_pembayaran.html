@@ -48,10 +48,10 @@
                                         <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'NEW')}" th:text="${'Pembelian '+data.harga.durationLength+' '+data.harga.durationType}"></span>
                                         <span th:if="${#strings.equalsIgnoreCase(data.tipeTransaksi,'UPDATE')}" th:text="${'Perpanjangan '+data.harga.durationLength+' '+data.harga.durationType}"></span>
                                     </td>
-                                    <td th:text="${data.harga.amount}"></td>
+                                    <td th:text="'Rp. '+${#numbers.formatDecimal(data.getAmount(), 0, 'COMMA', 0, 'POINT')}"></td>
                                     <td class="text-center">
                                         <button data-toggle="modal" data-target="#modalKonfirmasi"
-                                                th:attr="data-id=${data.id},data-fullname=${data.member.user.fullname},data-tipe=${data.tipeTransaksi},data-amount=${data.harga.amount},data-duration=${data.harga.durationLength + ' - '+data.harga.durationType}"
+                                                th:attr="data-id=${data.id},data-fullname=${data.member.user.fullname},data-tipe=${data.tipeTransaksi},data-amount=${data.getAmount()},data-duration=${data.harga.durationLength + ' - '+data.harga.durationType}"
                                                 class="btn btn-info modalKonfirmasi">Konfirmasi Pembayaran</button>
                                         <button th:if="${!#lists.isEmpty(data.buktiBayarList)}" data-toggle="modal"
                                                 th:attr="data-target='#modalBukti_'+${i.index}" class="btn btn-primary">Bukti Pembayaran</button>
